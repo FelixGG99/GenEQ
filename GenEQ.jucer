@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="w80FT8" name="GenEQ" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              cppLanguageStandard="17">
   <MAINGROUP id="Fm0WVp" name="GenEQ">
     <GROUP id="{A4B5709B-4703-86AC-7D07-00E970C7CE96}" name="Source">
       <FILE id="ANreUl" name="PluginProcessor.cpp" compile="1" resource="0"

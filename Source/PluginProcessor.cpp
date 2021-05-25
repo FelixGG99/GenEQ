@@ -24,13 +24,41 @@ GenEQAudioProcessor::GenEQAudioProcessor()
 {
 }
 
-GenEQAudioProcessor::~GenEQAudioProcessor()
-{
+GenEQAudioProcessor::~GenEQAudioProcessor(){
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout GenEQAudioProcessor::createParameterLayout() {
+
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("Low Cut Freq", "Low Cut Freq", juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 20.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("High Cut Freq", "High Cut Freq", juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 20000.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Freq", "Peak Freq", juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f), 750.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Gain", "Peak Gain", juce::NormalisableRange<float>(-24.f, 24.f, 0.5f, 1.f), 0.f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Quality", "Peak Quality", juce::NormalisableRange<float>(0.1f, 10.f, 0.05f, 1.f), 1.f));
+
+    const auto filterChoice = [](){
+        juce::StringArray result;
+        result.add(juce::String("12 db/Oct"));
+        result.add(juce::String("24 db/Oct"));
+        result.add(juce::String("36 db/Oct"));
+        result.add(juce::String("48 db/Oct"));
+        return result;
+    }();
+
+    layout.add(std::make_unique<juce::AudioParameterChoice>("Low Cut Slope", "Low Cut Slope", filterChoice, 0));
+
+    layout.add(std::make_unique<juce::AudioParameterChoice>("High Cut Slope", "High Cut Slope", filterChoice, 0));
+
+    return layout;
 }
 
 //==============================================================================
-const juce::String GenEQAudioProcessor::getName() const
-{
+const juce::String GenEQAudioProcessor::getName() const{
     return JucePlugin_Name;
 }
 
@@ -166,7 +194,8 @@ bool GenEQAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* GenEQAudioProcessor::createEditor()
 {
-    return new GenEQAudioProcessorEditor (*this);
+    //return new GenEQAudioProcessorEditor (*this);
+    return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
